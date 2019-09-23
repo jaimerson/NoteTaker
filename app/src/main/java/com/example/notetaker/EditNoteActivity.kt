@@ -25,7 +25,7 @@ class EditNoteActivity : AppCompatActivity() {
             note.body = with(note_body) { text.toString() }
             val position = this.intent.getIntExtra("position", -1)
             if (position != -1){
-                NoteRepository.updateNote(position, note, this)
+                NoteRepository.updateNote(note)
             }
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -24,8 +24,8 @@ class CreateNoteActivity : AppCompatActivity() {
             builder.setPositiveButton("OK") { dialog, _ ->
                 val title = input.text.toString()
                 if (title.isNotEmpty()){
-                    val note = Note(title, note_body.text.toString())
-                    NoteRepository.addNote(note, this)
+                    val note = Note(title, note_body.text.toString(), -1)
+                    NoteRepository.addNote(note)
                     goToMainActivity()
                 } else {
                     dialog.cancel()
