@@ -18,16 +18,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val noteListView = findViewById<RecyclerView>(R.id.recycler_view)
-        noteListView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        noteListView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        val notesList = NoteRepository.retrieveAll(this)
+        NoteRepository.retrieveAll(this)
 
-        val adapter = NoteAdapter(notesList) { note, position ->
+        val onClickListener: (Note, Int) -> Unit = { note, position ->
             val intent = Intent(this, EditNoteActivity::class.java)
             intent.putExtra("note", note)
             intent.putExtra("position", position)
             startActivity(intent)
         }
+        val onLongClickListener: (Note, Int) -> Unit = { _, position ->
+            NoteRepository.removeNote(this, position)
+            Toast.makeText(this, "Note removed", Toast.LENGTH_SHORT).show()
+            finish()
+            startActivity(intent)
+        }
+        val adapter = NoteAdapter(NoteRepository.notesList, onClickListener, onLongClickListener)
         noteListView.adapter = adapter
     }
 
