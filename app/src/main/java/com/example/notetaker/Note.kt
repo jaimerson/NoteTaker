@@ -1,3 +1,6 @@
 package com.example.notetaker
 
-data class Note(val title: String, val body: String)
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Note(val title: String?, var body: String?) : java.io.Serializable
